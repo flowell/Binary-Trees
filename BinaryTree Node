@@ -1,0 +1,28 @@
+template <typename Key, typename E>
+class BSTNode : public BinNode<E> {
+
+private:
+	Key k;
+	E it;
+	BSTNode* lc;
+	BSTNode* rc;
+
+public:
+	BSTNode();
+	BSTNode(Key k, E e, BSTNode* l = NULL, BSTNode* r = NULL);
+	~BSTNode() {}
+
+	E& element();
+	void setElement();
+
+	Key& key();
+	void setKey();
+
+	inline BSTNode* left() const;
+	inline BSTNode* right() const;
+
+	void setLeft(BinNode<E> *b);
+	void setRight(BinNode<E>* b);
+
+	bool isLeaf();
+};

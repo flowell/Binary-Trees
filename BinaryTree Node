@@ -1,3 +1,4 @@
+//2016.09.19 未debug
 template <typename Key, typename E>
 class BSTNode : public BinNode<E> {
 
@@ -9,8 +10,8 @@ private:
 
 public:
 	BSTNode();
-	BSTNode(Key k, E e, BSTNode* l = NULL, BSTNode* r = NULL);
-	~BSTNode() {}
+	BSTNode(Key K, E e, BSTNode* l = NULL, BSTNode* r = NULL);
+	~BSTNode();
 
 	E& element();
 	void setElement();
@@ -18,11 +19,76 @@ public:
 	Key& key();
 	void setKey();
 
-	inline BSTNode* left() const;
-	inline BSTNode* right() const;
+	BSTNode* left() const;
+    BSTNode* right() const;
 
 	void setLeft(BinNode<E> *b);
 	void setRight(BinNode<E>* b);
 
 	bool isLeaf();
 };
+
+template <typename Key, typename E>
+BSTNode<Key, E>::BSTNode() {
+	lc = NULL;
+	rc = NULL;
+}
+
+template <typename Key, typename E>
+BSTNode<Key, E>::BSTNode(Key K, E e, BSTNode* l, BSTNode* r) {
+	k = K;
+	it = e;
+	lc = l;
+	rc = r;
+}
+
+template <typename Key, typename E>
+BSTNode<Key, E>::~BSTNode() {
+
+}
+
+template <typename Key, typename E>
+E& BSTNode<Key, E>::element() {
+	return it;
+}
+
+template <typename Key, typename E>
+void BSTNode<Key, E>::setElement(const E& e) {
+	it = e;
+}
+
+template <typename Key, typename E>
+Key& BSTNode<Key, E>::key() {
+	return k;
+}
+
+template <typename Key, typename E>
+void BSTNode<Key, E>::setKey(const Key& K) {
+	k = K;
+}
+
+template <typename Key, typename E>
+inline BSTNode* BSTNode<Key, E>::left() const {
+	return lc;
+}
+
+template <typename Key, typename E>
+inline BSTNode* BSTNode<Key, E>::right() const {
+	return rc;
+}
+
+template <typename Key, typename E>
+void BSTNode<Key, E>::setLeft(BinNode<E>* b) {
+	lc = (BSTNode*)b;
+}
+
+template <typename Key, typename E>
+void BSTNode<Key, E>::setRight(BinNode<E>* b) {
+	rc = (BSTNode*)b;
+}
+
+template <typename Key, typename E>
+bool BSTNode<Key, E>::isLeaf() {
+	return (lc == NULL) && (rc == NULL);
+}
+

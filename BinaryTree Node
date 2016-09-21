@@ -1,4 +1,5 @@
-//2016.09.19 未debug
+#include "BinaryTree Node ADT.h"
+
 template <typename Key, typename E>
 class BSTNode : public BinNode<E> {
 
@@ -14,10 +15,10 @@ public:
 	~BSTNode();
 
 	E& element();
-	void setElement();
+	void setElement(const E& e);
 
 	Key& key();
-	void setKey();
+	void setKey(const Key& k);
 
 	BSTNode* left() const;
     BSTNode* right() const;
@@ -68,12 +69,12 @@ void BSTNode<Key, E>::setKey(const Key& K) {
 }
 
 template <typename Key, typename E>
-inline BSTNode* BSTNode<Key, E>::left() const {
+BSTNode<Key, E>* BSTNode<Key, E>::left() const {
 	return lc;
 }
 
 template <typename Key, typename E>
-inline BSTNode* BSTNode<Key, E>::right() const {
+BSTNode<Key, E>* BSTNode<Key, E>::right() const {
 	return rc;
 }
 
@@ -91,4 +92,5 @@ template <typename Key, typename E>
 bool BSTNode<Key, E>::isLeaf() {
 	return (lc == NULL) && (rc == NULL);
 }
+
 

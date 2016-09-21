@@ -5,10 +5,10 @@ public:
 
 	virtual E& element() = 0;
 
-	virtual setElement(const E&) = 0;
+	virtual void setElement(const E&) = 0;
 
 	virtual BinNode* left() const = 0;
-	virtual Binnode* right() const = 0;
+	virtual BinNode* right() const = 0;
 
 	virtual void setLeft(BinNode* node) = 0;
 	virtual void setRight(BinNode* node) = 0;

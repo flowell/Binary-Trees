@@ -1,0 +1,119 @@
+template <typename E, typename Comp>
+class Heap {
+private:
+	E* heap;
+	int maxSize;
+	int n;
+
+	void siftDown(int pos);
+
+public:
+	Heap(E* h,int num, int max);
+
+	int size() const;
+
+	bool isLeaf(int pos) const;
+
+	int leftChild(int pos) const;
+	int rightChild(int pos) const;
+
+	int parent(int pos) const;
+
+	void buildHeap();
+
+	void insert(const E& it);
+
+	E removeFirst();
+
+	E remove(int pos);
+};
+
+template <typename E, typename Comp>
+void Heap<E, Comp>::siftDown(int pos) {
+	while (!isLeaf(pos)) {
+		int lc = leafChild(pos);
+		int rc = rightChild(pos);
+		if ((rc < n) && Comp::prior(heap[rc], heap[lc]))
+			lc = rc;
+		if (Comp::prior(heap[pos], heap[lc]))
+			return;
+		swap(heap, pos, lc);
+		pos = lc;
+	}
+}
+
+template <typename E, typename Comp>
+Heap<E, Comp>::Heap(E* e, int num, int max) {
+	heap = h;
+	n = num;
+	maxSize = max;
+	buildHeap();
+}
+
+template <typename E, typename Comp>
+int Heap<E, Comp>::size() const {
+	return n;
+}
+
+template <typename E, typename Comp>
+bool Heap<E, Comp>::isLeaf(int pos) const {
+	return (pos >= n/2) && (pos < n);                  //此heap从0号位开始使用
+}
+
+template <typename E, typename Comp>
+int Heap<E, Comp>::leftChild(int pos) const {           
+	return 2 * pos + 1;
+}
+
+template <typename E, typename Comp>
+int Heap<E, Comp>::rightChild(int pos) const {
+	return 2 * pos + 2;
+}
+
+template <typename E, typename Comp>
+int Heap<E, Comp>::parent(int pos) const {
+	return (pos - 1) / 2;
+}
+
+template <typename E, typename Comp>
+void Heap<E, Comp>::buildHeap() {
+	for (int i = n / 2 - 1; i >= 0; --i)
+		siftDown(i);
+}
+
+template <typename E, typename Comp>
+void Heap<E, Comp>::insert(const E& it) {
+	//assert(n < maxSize);
+	int curr = n++;
+	heap[curr] = it;
+	while ((curr != 0) && (Comp::prior(heap[curr], heap[parent(curr)]))) {
+		swap(heap, curr, parent(curr));
+		curr = parent(curr);
+	}
+}
+
+template <typename E, typename Comp>
+E Heap<E, Comp>::removeFirst() {
+	//assert(n > 0);
+	swap(heap, 0, --n);
+	if (n != 0)
+		siftDown(0);
+	return heap[n];
+}
+
+template <typename E, typename Comp>
+E Heap<E, Comp>::remove(int pos) {
+	//assert((pos >= 0) && (pos < n));
+	if (pos == (n-1))
+		--n;
+	else {
+		swap(heap, pos, --n);
+		while ((pos != 0) && (Comp::prior(heap[pos]. heap[parent(pos)]))) {
+			swap(heap, pos, parent(pos));
+			pos = parent(pos);
+		}
+		if (n != 0)
+			siftDown(pos);
+	}
+	return heap[n];
+}

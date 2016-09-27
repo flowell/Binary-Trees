@@ -1,0 +1,137 @@
+//------------------------------------------------------
+//******************************************************
+template <typename E>
+class HuffNode {
+public:
+	virtual ~HuffNode() {}
+	virtual int weight () const = 0;
+	virtual bool inLeaf() cosnt = 0;
+};
+
+//-------------------------------------------------------
+//*******************************************************
+
+template <typename E>
+class LeafNode : public HuffNode<E> {
+private:
+	E it;
+	int wgt;
+public:
+	LeafNode(const E& val, int freq);
+	int weight() const;
+	E value();
+	bool isLeaf() const;
+};
+
+template <typename E>
+LeafNode<E>::LeafNode(const E& val, int freq) {
+	it = val;
+	wgt = freq;
+}
+
+template <typename E>
+int LeafNode<E>::weight() const {
+	return wgt;
+}
+
+template <typename E>
+E LeafNode<E>::value() {
+	return it;
+}
+
+template <typename E>
+bool LeafNode<E>::isLeaf() const {
+	return true;
+}
+
+//-----------------------------------------------------
+//*****************************************************
+template <typename E>
+class IntlNode : public HuffNode<E> {
+private:
+	HuffNode<E>* lc;
+	HuffNode<E>* rc;
+	int wgt;
+	
+public:
+	IntlNode(HuffNode<E>* l, HuffNode<E>* r);
+	int weight() const;
+	bool isLeaf() const;
+	
+	HuffNode<E>* left() const;
+	HuffNode<E>* right() const;
+	
+	void setLeaf(HuffNode<E>* l);
+	void setRight(HuffNode<E>* r);
+};
+
+template <typename E>
+IntlNode<E>::IntlNode(HuffNode<E>* l, HuffNode<E>* r) {
+	lc = l;
+	rc = r;
+	wgt = l.weight() + r.weight();
+}
+
+template <typename E>
+int IntlNode<E>::weight() const {
+	return wgt;
+}
+
+template <typename E>
+bool IntlNode<E>::isLeaf() const {
+	return false;
+}
+
+template <typename E>
+HuffNode<E>* IntlNode<E>::left() const {
+	return lc;
+}
+
+template <typename E>
+HuffNode<E>* IntlNode<E>::right() const {
+	return rc;
+}
+
+template <typename E>
+void IntlNode<E>::setLeft(HuffNode<E>* l) {
+	lc = (HuffNode<E>*)l;
+}
+
+template <typename E>
+void IntlNode<E>::setRight(HuffNode<E>* r) {
+	rc = (HuffNode<E>*)r;
+}
+
+//-----------------------------------------------------
+//*****************************************************
+template <typename E>
+class HuffTree {
+private:
+	HuffNode<E>* Root;
+public:
+	HuffTree(E& value, int freq);
+	HuffTree(HuffTree<E>* l, HuffTree<E>* r);
+	~HuffTree(){}
+	HuffNode<E>* root() const;
+	int weight() const;
+};
+
+template <typename E>
+HuffTree<E>::HuffTree(E& val, int freq) {
+	Root = new LeafNode<E>(val, freq);
+}
+
+template <typename E>
+HuffTree<E>::HuffTree<HuffTree<E>* l, HuffTree<E>* r) {
+	Root = new IntlNode<E>(l->root(), r->root();
+}
+
+template <typename E>
+HuffNode<E>* HuffTree<E>::root() const {
+	return Root;
+}
+
+template <typename E>
+int HuffTree<E>::weight() const {
+	return Root->weight();
+}

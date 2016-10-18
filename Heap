@@ -1,3 +1,4 @@
+#include "Comp.h"
 template <typename E, typename Comp>
 class Heap {
 private:
@@ -12,26 +13,26 @@ public:
 
 	int size() const;
 
-	bool isLeaf(int pos) const;
-
-	int leftChild(int pos) const;
-	int rightChild(int pos) const;
-
 	int parent(int pos) const;
-
-	void buildHeap();
 
 	void insert(const E& it);
 
 	E removeFirst();
 
 	E remove(int pos);
+
+private:
+	void buildHeap();
+	bool isLeaf(int pos) const;
+
+	int leftChild(int pos) const;
+	int rightChild(int pos) const;
 };
 
 template <typename E, typename Comp>
 void Heap<E, Comp>::siftDown(int pos) {
 	while (!isLeaf(pos)) {
-		int lc = leafChild(pos);
+		int lc = leftChild(pos);
 		int rc = rightChild(pos);
 		if ((rc < n) && Comp::prior(heap[rc], heap[lc]))
 			lc = rc;
@@ -43,7 +44,7 @@ void Heap<E, Comp>::siftDown(int pos) {
 }
 
 template <typename E, typename Comp>
-Heap<E, Comp>::Heap(E* e, int num, int max) {
+Heap<E, Comp>::Heap(E* h, int num, int max) {
 	heap = h;
 	n = num;
 	maxSize = max;
@@ -117,3 +118,44 @@ E Heap<E, Comp>::remove(int pos) {
 	}
 	return heap[n];
 }
+
+-------------------------------------------------------------------------------------------------
+*************************************************************************************************
+//Comp.h
+#ifndef COMP_H
+#define COMP_H
+template <typename E>
+class Comp {
+public:
+	static bool prior(E& left, E& right);
+};
+
+template <typename E>
+bool Comp<E>::prior(E& left, E& right) {
+	return left>=right;
+}
+
+template <typename E>
+void swap(E* e, int a, int b) {
+	E temp = e[a];
+	e[a] = e[b];
+	e[b] = temp;
+}
+
+
+#endif
+
+---------------------------------------------------------------------------------------
+***************************************************************************************
+//main.cpp
+#include "Heap.h"
+#include "Comp.h"
+#include <iostream>
+
+int main()
+{
+	int h[10] = {1,2,3,4,5,6,7,8,9,0};
+	Heap<int, Comp<int>> heap(h, 10, 10);
+	for (int i = 0 ; i < 10; ++i)
+		std::cout << heap.removeFirst();
+};

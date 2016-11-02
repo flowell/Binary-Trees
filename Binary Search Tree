@@ -154,10 +154,10 @@ BSTNode<Key, E>* BST<Key, E>::removeHelp(BSTNode<Key, E>* rt, const Key& k) {
 
 		if (rt->left() == NULL) {
 			rt = rt->right();                           //左结点为空，直接用右结点去覆盖
-			delete temp;
+			delete temp;                                //因为要手动释放内存，所以不能直接return
 		}
 		else if (rt->right() == NULL) {                 //右结点为空，直接用左结点去覆盖
-			rt = rt->left();
+			rt = rt->left();                         //因为要手动释放内存，所以不能直接return
 			delete temp;
 		}
 		else {
@@ -168,7 +168,7 @@ BSTNode<Key, E>* BST<Key, E>::removeHelp(BSTNode<Key, E>* rt, const Key& k) {
 			delete temporary;
 		}
 	}
-	return rt;
+	return rt;                                           //因为要手动释放内存，所以不能直接return
 }
 
 template <typename Key,typename E>

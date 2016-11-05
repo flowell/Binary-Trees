@@ -164,7 +164,7 @@ BSTNode<Key, E>* BST<Key, E>::removeHelp(BSTNode<Key, E>* rt, const Key& k) {
 			BSTNode<Key, E>* temporary = getMin(rt->right());
 			rt->setElement(temporary->element());
 			rt->setKey(temporary->key());
-			rt->setRight(deleteMin(rt->right()));
+			rt->setRight(deleteMin(rt->right()));         //把右子树的根重新设置并删除代替的节点
 			delete temporary;
 		}
 	}

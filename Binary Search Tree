@@ -127,7 +127,7 @@ template <typename Key, typename E>
 BSTNode<Key, E>* BST<Key, E>::deleteMin(BSTNode<Key, E>* rt) {
 	if (rt->left() == NULL)
 		return rt->right();
-	else { //此处应有删除
+	else { //此处应有删除(手动释放内存)
 		rt->setLeft(deleteMin(rt->left()));
 		return rt;
 	}

@@ -62,7 +62,7 @@ void BST<Key, E>::insert(const Key& k, const E& e) {
 
 template <typename Key, typename E>
 E BST<Key, E>::remove(const Key& k) {
-	E temp = findHelp(root, k);
+	E temp = findHelp(root, k);               //在removehelp中释放了内存，此处返回的是系统栈内存
 	if (temp != NULL) {
 		root = removeHelp(root, k);       //removehelp返回的是rt，因为最后一次出栈的是root，因为root可能改变，此句一举两得
 		--nodecount;

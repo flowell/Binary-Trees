@@ -64,7 +64,7 @@ template <typename Key, typename E>
 E BST<Key, E>::remove(const Key& k) {
 	E temp = findHelp(root, k);
 	if (temp != NULL) {
-		root = removeHelp(root, k);
+		root = removeHelp(root, k);       //removehelp返回的是rt，因为最后一次出栈的是root
 		--nodecount;
 	}
 	return temp;
